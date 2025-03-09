@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.output-box {
+    width: 100%;
+    min-height: 200px;
+    font-size: 24px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    background: #fafafa;
+    resize: both; /* Allow resizing */
+    overflow: auto;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.secondary {
+    background-color: #FF3B30;
+    color: white;
+}
+
+.save-btn {
+    background-color: #007BFF;
+    color: white;
+}
+
+.btn:hover {
+    filter: brightness(90%);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.checkbox-group label {
+    margin: 5px;
+    font-size: 18px;
+}

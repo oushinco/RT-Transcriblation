@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyOutput = document.getElementById('historyOutput');
     const saveHistoryBtn = document.getElementById('saveHistory');
     const languageOptions = document.querySelectorAll("#languageOptions input[type='checkbox']");
+    const BASE_URL = "https://rt-transcriblation.onrender.com"; // Update API URL
 
     let recognition;
     let isRecording = false;
@@ -176,13 +177,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             translationsContainer.innerHTML = ""; // Clear previous translations (only last sentence shows)
 
+            // for (const language of selectedLanguages) {
+            //     const response = await fetch('/api/translate', {
+            //         method: 'POST',
+            //         headers: { 'Content-Type': 'application/json' },
+            //         body: JSON.stringify({ text, targetLanguage: language })
+            //     });
             for (const language of selectedLanguages) {
-                const response = await fetch('/api/translate', {
+                const response = await fetch(`${BASE_URL}/api/translate`, {  // Updated API URL
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text, targetLanguage: language })
                 });
-
+                
                 const translationData = await response.json();
                 if (translationData.error) throw new Error(translationData.error);
 

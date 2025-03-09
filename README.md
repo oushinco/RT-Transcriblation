@@ -1,5 +1,9 @@
 # 🎤 Speech Transcription & Translation App
 
+🚀 **Real-time speech transcription and translation using OpenAI!**
+
+![RT-Transcriblation](RT-Transcriblation.png)
+
 This is a **real-time speech transcription and translation** app using:
 - 🖥 **Frontend:** HTML, CSS, JavaScript
 - 🌐 **Backend:** Node.js (Express)

@@ -1,102 +1,3 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     // DOM Elements
-//     const startBtn = document.getElementById('startRecording');
-//     const stopBtn = document.getElementById('stopRecording');
-//     const statusElement = document.getElementById('recordingStatus');
-//     const transcriptionOutput = document.getElementById('transcriptionOutput');
-//     const translationOutput = document.getElementById('translationOutput');
-//     const languageSelect = document.getElementById('languageSelect');
-    
-//     let recognition;
-//     let isRecording = false;
-
-//     // Start recording with real-time transcription
-//     startBtn.addEventListener('click', () => {
-//         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-//             statusElement.textContent = 'Speech recognition is not supported in this browser.';
-//             return;
-//         }
-
-//         statusElement.textContent = 'Listening... Speak now.';
-//         statusElement.style.color = 'var(--danger-color)';
-//         startBtn.disabled = true;
-//         stopBtn.disabled = false;
-//         transcriptionOutput.textContent = '';
-//         translationOutput.textContent = '';
-
-//         recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-//         recognition.continuous = true;
-//         recognition.interimResults = true;
-//         recognition.lang = 'en-US'; // Default language for speech recognition
-//         isRecording = true;
-
-//         recognition.onresult = async (event) => {
-//             let finalTranscript = "";
-//             for (let i = event.resultIndex; i < event.results.length; i++) {
-//                 if (event.results[i].isFinal) {
-//                     finalTranscript += event.results[i][0].transcript + " ";
-//                 }
-//             }
-
-//             // Update transcription output
-//             transcriptionOutput.textContent = finalTranscript;
-
-//             // Auto translate in real-time
-//             if (finalTranscript.trim() !== "") {
-//                 translateText(finalTranscript);
-//             }
-//         };
-
-//         recognition.onerror = (event) => {
-//             console.error('Speech Recognition Error:', event.error);
-//             statusElement.textContent = 'Error with speech recognition.';
-//             stopRecording();
-//         };
-
-//         recognition.start();
-//     });
-
-//     // Stop recording
-//     stopBtn.addEventListener('click', () => {
-//         stopRecording();
-//     });
-
-//     function stopRecording() {
-//         if (recognition && isRecording) {
-//             recognition.stop();
-//             isRecording = false;
-//             statusElement.textContent = 'Stopped recording.';
-//             startBtn.disabled = false;
-//             stopBtn.disabled = true;
-//         }
-//     }
-
-//     // Function to send text for translation
-//     async function translateText(text) {
-//         try {
-//             const targetLanguage = languageSelect.value;
-//             statusElement.textContent = `Translating to ${targetLanguage}...`;
-
-//             const response = await fetch('/api/translate', {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({ text, targetLanguage })
-//             });
-
-//             const translationData = await response.json();
-//             if (translationData.error) {
-//                 throw new Error(translationData.error);
-//             }
-
-//             translationOutput.textContent = translationData.translation;
-//             statusElement.textContent = 'Translation complete.';
-//         } catch (error) {
-//             console.error('Error translating text:', error);
-//             statusElement.textContent = 'Translation error.';
-//         }
-//     }
-// });
-
 document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('startRecording');
     const stopBtn = document.getElementById('stopRecording');
@@ -107,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveHistoryBtn = document.getElementById('saveHistory');
     const languageOptions = document.querySelectorAll("#languageOptions input[type='checkbox']");
     const BASE_URL = "https://rt-transcriblation.onrender.com"; // Update API URL
+    // const BASE_URL = ""; // Update API URL
 
     let recognition;
     let isRecording = false;
@@ -177,19 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             translationsContainer.innerHTML = ""; // Clear previous translations (only last sentence shows)
 
-            // for (const language of selectedLanguages) {
-            //     const response = await fetch('/api/translate', {
-            //         method: 'POST',
-            //         headers: { 'Content-Type': 'application/json' },
-            //         body: JSON.stringify({ text, targetLanguage: language })
-            //     });
             for (const language of selectedLanguages) {
-                const response = await fetch(`${BASE_URL}/api/translate`, {  // Updated API URL
+                // const response = await fetch('/api/translate', {
+                const response = await fetch(`${BASE_URL}/api/translate`, { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text, targetLanguage: language })
                 });
-                
+
                 const translationData = await response.json();
                 if (translationData.error) throw new Error(translationData.error);
 

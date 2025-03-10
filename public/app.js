@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageOptions = document.querySelectorAll("#languageOptions input[type='checkbox']");
     const inputLanguageSelect = document.getElementById('inputLanguageSelect'); // ✅ Added input language dropdown
 
-    // const BASE_URL = "https://rt-transcriblation.onrender.com"; // Update API URL
-    const BASE_URL = ""; // Update API URL
+    const BASE_URL = "https://rt-transcriblation.onrender.com"; // Update API URL
+    // const BASE_URL = ""; // Update API URL
     // const BASE_URL = config.API_URL; // ✅ Use API_URL from config.js
 
 

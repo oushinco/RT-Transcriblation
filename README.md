@@ -1,4 +1,4 @@
-# 🎤 Speech Transcription & Translation App
+# 🎤 Real Time Speech Transcription & Translation App
 
 🚀 **Real-time speech transcription and translation using OpenAI!**
 
@@ -17,6 +17,10 @@ This is a **real-time speech transcription and translation** app using:
 ✅ **Saves History**: Stores transcription & translations in separate files  
 ✅ **Resizable UI**: Users can resize text areas  
 ✅ **AWS Hosted**: Frontend on S3, Backend on EC2/Lambda  
+
+## Demo
+
+https://rt-transcriblation.onrender.com/
 
 ---
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Google</title>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Login with Google</h2>
+        <button id="googleLogin">Login with Google</button>
+        <p id="errorMessage" class="error"></p>
+    </div>
+
+    <script>
+        // ✅ Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1LROq3tU_eu12Z3YAiGmlADrncPYpGaY",
+            authDomain: "rt-transcriblation.firebaseapp.com",
+            projectId: "rt-transcriblation",
+            storageBucket: "rt-transcriblation.appspot.com",
+            messagingSenderId: "250626866531",
+            appId: "1:250626866531:web:f0800ca33d0da6efb22756",
+            measurementId: "G-5D3P02K14N"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        document.getElementById("googleLogin").addEventListener("click", async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            try {
+                console.log("🔵 Google Sign-in Initiated...");
+                const result = await auth.signInWithPopup(provider);
+                console.log("✅ User Logged In:", result.user);
+
+                // Save login session
+                localStorage.setItem("loggedIn", "true");
+
+                // Redirect to main app
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("❌ Google Login Error:", error.message);
+                document.getElementById("errorMessage").textContent = error.message;
+            }
+        });
+
+        // ✅ Auto-Redirect If Already Logged In
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                console.log("🔄 User already logged in:", user);
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+</body>
+</html>

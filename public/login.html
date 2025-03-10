@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="loginstyle.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p>Login to access the app</p>
+
+            <input type="text" id="username" placeholder="Enter your username">
+            <input type="password" id="password" placeholder="Enter your password">
+            <button id="login">Login</button>
+
+            <p id="statusMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "/api";
+
+        document.getElementById("login").addEventListener("click", async () => {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                document.getElementById("statusMessage").textContent = data.message || data.error;
+
+                if (data.message === "Login successful!") {
+                    localStorage.setItem("loggedInUser", username);
+                    document.getElementById("statusMessage").textContent = "✅ Login successful! Redirecting...";
+
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 1000);
+                }
+            } catch (error) {
+                document.getElementById("statusMessage").textContent = "❌ Server error.";
+                console.error("Login Error:", error);
+            }
+        });
+
+        if (localStorage.getItem("loggedInUser")) {
+            window.location.href = "index.html";
+        }
+        // document.getElementById("login").addEventListener("click", async () => {
+        //     const username = document.getElementById("username").value;
+        //     const password = document.getElementById("password").value;
+
+        //     try {
+        //         const response = await fetch(`${API_URL}/login`, {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify({ username, password })
+        //         });
+
+        //         const data = await response.json();
+        //         document.getElementById("statusMessage").textContent = data.message || data.error;
+
+        //         if (data.message === "Login successful!") {
+        //             sessionStorage.setItem("loggedInUser", username); // ✅ Store user in session storage
+        //             window.location.href = "index.html";
+        //         }
+        //     } catch (error) {
+        //         console.error("Login Error:", error);
+        //         document.getElementById("statusMessage").textContent = "❌ Server error.";
+        //     }
+        // });
+
+        // // ✅ Redirect if already logged in
+        // if (sessionStorage.getItem("loggedInUser")) {
+        //     window.location.href = "index.html";
+        // }
+
+
+
+
+    </script>
+</body>
+</html>

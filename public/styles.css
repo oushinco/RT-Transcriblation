@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     text-align: center;
@@ -26,7 +26,7 @@ h1 {
 .output-box {
     width: 100%;
     min-height: 200px;
-    font-size: 24px;
+    font-size: 30px;
     padding: 10px;
     border: 2px solid #ddd;
     background: #fafafa;
@@ -75,4 +75,193 @@ h1 {
     font-size: 18px;
 }
 
+ */
 
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f8fb;
+    color: #333;
+    line-height: 1.6;
+    padding: 2rem;
+  }
+  
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #007cf0, #00dfd8);
+  }
+  
+  .auth-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .auth-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .auth-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  
+  .card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .btn {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .btn.primary {
+    background: #007cf0;
+    color: white;
+  }
+  
+  .btn.secondary {
+    background: #e0e0e0;
+    color: #333;
+  }
+  
+  .btn.danger {
+    background: #ff5252;
+    color: white;
+  }
+  
+  .btn.save {
+    background: #4caf50;
+    color: white;
+  }
+  
+  .btn.large {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .status {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .output-box {
+    width: 100%;
+    min-height: 120px;
+    background: #f9f9f9;
+    padding: 1rem;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-family: monospace;
+    white-space: pre-wrap;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .checkbox-group label {
+    background: #eef2f7;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .select {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+  }
+  
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .app-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .logout-top {
+    margin-left: auto;
+  }
+
+  .checkbox-group {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .checkbox-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }

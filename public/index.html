@@ -1,110 +1,150 @@
-<script>
-    console.log("Checking login status...");
-    
-    const user = localStorage.getItem("loggedInUser");
-    
-    if (!user) {
-        console.warn("User not logged in, redirecting...");
-        window.location.href = "login.html";
-    } else {
-        console.log("User logged in:", user);
-    }
-
-
-</script>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speech Transcription & Translation</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Speech Transcription & Translation</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Speech Transcription & Translation</h1>
 
-        <div class="speech-controls">
-            <button id="startRecording" class="btn primary">Start Recording</button>
-            <button id="stopRecording" class="btn secondary" disabled>Stop Recording</button>
-            <div id="recordingStatus" class="status">Ready to record</div>
-        </div>
+  <!-- 🔐 Auth UI -->
+  <div id="authContent" class="auth-container">
+    <h2>Please sign in to use the app</h2>
+    <button id="loginBtn" class="btn primary">Login with Google</button>
+  </div>
 
+  <!-- ✅ Main App UI -->
+  <div id="appContent" class="app-container" style="display: none;">
+    <header class="app-header">
+    <h1>Speech Transcription & Translation</h1>
+    <button id="logoutBtn" class="btn secondary logout-top">Logout</button>
+    </header>
+
+    <section class="controls">
+      <button id="startRecording" class="btn primary">Start Recording</button>
+      <button id="stopRecording" class="btn secondary" disabled>Stop Recording</button>
+      <div id="recordingStatus" class="status">Ready to record</div>
+    </section>
+
+    <!-- <section class="languages"> -->
+      <section class="card">
+        <h3> 🗣️ Input Language</h3>
         <div class="input-group">
-            <h3>Select languages for translation:</h3>
-            <div id="languageOptions" class="checkbox-group">
-                <label><input type="checkbox" value="English"> English</label>
-                <label><input type="checkbox" value="Chinese"> Chinese</label>
-                <label><input type="checkbox" value="Dutch"> Netherlands</label>
-                <label><input type="checkbox" value="French"> French</label>
-                <label><input type="checkbox" value="German"> German</label>
-                <label><input type="checkbox" value="Italian"> Italian</label>
-                <label><input type="checkbox" value="Japanese"> Japanese</label>
-                <label><input type="checkbox" value="Spanish"> Spanish</label>
-                <label><input type="checkbox" value="Russian"> Russian</label>
-                <label><input type="checkbox" value="Arabic"> Arabic</label>
-                <label><input type="checkbox" value="Hindi"> Hindi</label>
-                <label><input type="checkbox" value="Portuguese"> Portuguese</label>
-            </div>
-        </div>
-        <div class="input-group">
-            <h3>Choose Input Language:</h3>
-            <select id="inputLanguageSelect" class="select">
-                <option value="en-US">English</option>
-                <option value="nl-NL">Dutch (Netherlands)</option> 
-                <option value="zh-CN">Chinese (Mandrain)</option>
-                <option value="yue-HK">Cantonese</option> 
-                <option value="hak-CN">Hakka</option> 
-                <option value="es-ES">Spanish</option>
-                <option value="fr-FR">French</option>
-                <option value="de-DE">German</option>
-                <option value="it-IT">Italian</option>
-                <option value="ja-JP">Japanese</option>
-                <option value="ar-SA">Arabic</option>
-            </select>
-        </div>
-        
-        <div class="card">
-            <h2>Live Transcription</h2>
-            <textarea id="transcriptionOutput" class="output-box" placeholder="Your transcribed text will appear here"></textarea>
-            <p id="detectedLanguage">Detected Language: </p>
+          <!-- <label for="inputLanguageSelect">Input Language</label> -->
+          <select id="inputLanguageSelect" class="select">
+            <option value="en-US">English</option>
+            <option value="nl-NL">Dutch</option>
+            <option value="zh-CN">Chinese (Mandarin)</option>
+            <option value="yue-HK">Cantonese</option>
+            <option value="hak-CN">Hakka</option>
+            <option value="es-ES">Spanish</option>
+            <option value="fr-FR">French</option>
+            <option value="de-DE">German</option>
+            <option value="it-IT">Italian</option>
+            <option value="ja-JP">Japanese</option>
+            <option value="ar-SA">Arabic</option>
+          </select>
         </div>
 
-        <div class="card">
-            <h2>Translations</h2>
-            <div id="translationsContainer" class="output-box"></div>
+
+        <h3> 🌎 Target Language</h3>
+        <div id="languageOptions" class="checkbox-group">
+          <label><input type="checkbox" value="English"> English</label>
+          <label><input type="checkbox" value="Chinese"> Chinese</label>
+          <label><input type="checkbox" value="Dutch"> Dutch</label>
+          <label><input type="checkbox" value="French"> French</label>
+          <label><input type="checkbox" value="German"> German</label>
+          <label><input type="checkbox" value="Italian"> Italian</label>
+          <label><input type="checkbox" value="Japanese"> Japanese</label>
+          <label><input type="checkbox" value="Spanish"> Spanish</label>
+          <label><input type="checkbox" value="Russian"> Russian</label>
+          <label><input type="checkbox" value="Arabic"> Arabic</label>
+          <label><input type="checkbox" value="Hindi"> Hindi</label>
+          <!-- <label><input type="checkbox" value="Portuguese"> Portuguese</label> -->
         </div>
 
-        <div class="card">
-            <h2>History</h2>
-            <div id="historyOutput" class="output-box"></div>
-            <button id="clearHistory" class="btn save-btn">Clear History</button>
-            <button id="saveHistory" class="btn save-btn">Save History</button>
-
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+       
 
 
-    <!-- <button id="logout">Logout</button> -->
-    <button id="logout" class="btn save-btn">Logout</button>
+      </section>
 
-    <script>
-        document.getElementById("logout").addEventListener("click", () => {
-            console.log("Logging out...");
-            localStorage.removeItem("loggedInUser"); // ✅ Remove user
-            window.location.href = "login.html"; // ✅ Redirect to login
-        });
-    </script>
-    
+    <section class="card">
+      <h3> 📝 Live Transcription</h3>
+      <textarea id="transcriptionOutput" class="output-box" placeholder="Your transcribed text will appear here"></textarea>
+      <div class="font-size-controls">
+        <button id="increaseTranscriptionFont" class="btn small">A+</button>
+        <button id="decreaseTranscriptionFont" class="btn small">A-</button>
+      </div>
+      <p id="detectedLanguage">Detected Language: </p>
+    </section>
 
+    <section class="card">
+      <h3> 🌐 Translations</h3>
+      <div id="translationsContainer" class="output-box"></div>
+      <div class="font-size-controls">
+        <button id="increaseTranslationFont" class="btn small">A+</button>
+        <button id="decreaseTranslationFont" class="btn small">A-</button>
+      </div>
+    </section>
 
+    <section class="card">
+      <h3> 📜 History</h3>
+      <div id="historyOutput" class="output-box"></div>
+      <div class="font-size-controls">
+        <button id="increaseHistoryFont" class="btn small">A+</button>
+        <button id="decreaseHistoryFont" class="btn small">A-</button>
+      </div>
+      <button id="clearHistory" class="btn save-btn">Clear History</button>
+      <button id="saveHistory" class="btn save-btn">Save History</button>
+    </section>
+  </div>
 
+  <!-- ✅ App script -->
+  <script src="app.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const transcriptionBox = document.getElementById("transcriptionOutput");
+      const translationBox = document.getElementById("translationsContainer");
+      const historyBox = document.getElementById("historyOutput");
+
+      let transFont = 16;
+      let translatFont = 16;
+
+      document.getElementById("increaseTranscriptionFont").addEventListener("click", () => {
+        transFont += 2;
+        transcriptionBox.style.fontSize = `${transFont}px`;
+      });
+
+      document.getElementById("decreaseTranscriptionFont").addEventListener("click", () => {
+        transFont = Math.max(10, transFont - 2);
+        transcriptionBox.style.fontSize = `${transFont}px`;
+      });
+
+      document.getElementById("increaseTranslationFont").addEventListener("click", () => {
+        translatFont += 2;
+        translationBox.style.fontSize = `${translatFont}px`;
+      });
+
+      document.getElementById("decreaseTranslationFont").addEventListener("click", () => {
+        translatFont = Math.max(10, translatFont - 2);
+        translationBox.style.fontSize = `${translatFont}px`;
+      });
+
+      document.getElementById("increaseHistoryFont").addEventListener("click", () => {
+        transFont += 2;
+        historyBox.style.fontSize = `${transFont}px`;
+      });
+
+      document.getElementById("decreaseHistoryFont").addEventListener("click", () => {
+        transFont = Math.max(10, transFont - 2);
+        historyBox.style.fontSize = `${transFont}px`;
+      });
+    });
+  </script>
 </body>
 </html>
